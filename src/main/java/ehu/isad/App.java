@@ -5,7 +5,7 @@ package ehu.isad;
 
 public class App {
 
-    public char[] patroiaSortu(){
+    private char[] patroiaSortu(){
         //Ausaz letrak esleituko ditu ordezkatze patroia sortzeko
         //Post: Ausaz ordezkatze patroia sortu du Array bat itzuliz
 
@@ -25,9 +25,11 @@ public class App {
             }
         }
 
+        System.out.println("Patroia:\nABCDEFGHIJKLMNOPQRSTUVWXYZ");
         for(int j = 0; j < 26; j++){ //Patroia inprimatu
             System.out.print(patroiaArray[j]);
         }
+        System.out.println(" \n");
 
         return patroiaArray;
     }
@@ -45,7 +47,50 @@ public class App {
     }
 
 
+    public String zifratu(String mezua){
+        //Mezu bat emanda, ordezkatze algoritmoa erabiliz kriptograma sortuko du
+        //Aurre: Mezuak ezin izago ditu karaktere bereziak izan.
+        //      Alfabetoa: abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ
+        //Post: Mezua enkriptatuta itzultzen du
+
+        System.out.println("Emandako mezua:\n" + mezua + "\n");
+        char patroia[] = this.patroiaSortu();
+
+        String mezuaPrest = "";
+        mezuaPrest = this.hutsuneakKendu(mezua);
+        mezuaPrest = this.letraLarrizJarri(mezuaPrest);
+        System.out.println("Mezua:\n" + mezuaPrest + "\n");
+
+        String kriptograma = "";
+        for(int i = 0 ; i < mezuaPrest.length(); i++){
+            int ascii = (int)mezuaPrest.charAt(i);
+            int pos = ascii - 65; //Patroian dagokion posizioa kalkulatu
+            kriptograma = kriptograma+patroia[pos];
+        }
+
+        System.out.println("Kriptograma:\n"+kriptograma);
+        return kriptograma;
+    }
+
+
+    private String hutsuneakKendu(String mezua){
+        //Mezu bat emanda hutsuneak kentzen dizkio
+        //Post: Hutsune gabeko String bat itzultzen du
+
+        return mezua.replace(" ","");
+    }
+
+
+    private String letraLarrizJarri(String mezua){
+        //Mezu bat emanda letra larriz jartzen du
+        //Post: Bakarrik letra larriak dituen String bat itzultzen du
+
+       return mezua.toUpperCase();
+
+    }
+
+
     public static void main(String[] args) {
-        char patroiaArray[] = new App().patroiaSortu();
+        new App().zifratu("OnDo funtzioNATzen DuT");
     }
 }
