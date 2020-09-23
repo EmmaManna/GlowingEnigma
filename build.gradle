@@ -32,3 +32,11 @@ application {
     // Define the main class for the application.
     mainClassName = 'ehu.isad.App'
 }
+
+
+run{
+    standardInput = System.in
+    args 'Mezu hau proba bat da'
+    args 'Gazta'
+}
+

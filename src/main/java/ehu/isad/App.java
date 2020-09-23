@@ -77,14 +77,21 @@ public class App {
     }
 
 
-    public String zifratu(String mezua){
+    public String zifratu(String mezua, String kodea){
         //Mezu bat emanda, ordezkatze algoritmoa erabiliz kriptograma sortuko du
         //Aurre: Mezuak ezin izago ditu karaktere bereziak izan.
         //      Alfabetoa: abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ
         //Post: Mezua enkriptatuta itzultzen du
 
         System.out.println("Emandako mezua:\n" + mezua + "\n");
-        char patroia[] = this.patroiaGakoarekinSortu("patata");
+        System.out.println("Mezua zifratzen...");
+        char patroia[];
+        if(kodea.equals(" ")){
+            patroia = this.patroiaAusazSortu();
+        }
+        else{
+            patroia = this.patroiaGakoarekinSortu(kodea);
+        }
 
         System.out.println("Patroia:\nABCDEFGHIJKLMNOPQRSTUVWXYZ");
         for(int j = 0; j < 26; j++){ //Patroia inprimatu
@@ -95,7 +102,6 @@ public class App {
         String mezuaPrest = "";
         mezuaPrest = this.hutsuneakKendu(mezua);
         mezuaPrest = this.letraLarrizJarri(mezuaPrest);
-        System.out.println("Mezua:\n" + mezuaPrest + "\n");
 
         String kriptograma = "";
         for(int i = 0 ; i < mezuaPrest.length(); i++){
@@ -104,7 +110,7 @@ public class App {
             kriptograma = kriptograma+patroia[pos];
         }
 
-        System.out.println("Kriptograma:\n"+kriptograma);
+        System.out.println("Kriptograma:\n"+kriptograma+"\n");
         return kriptograma;
     }
 
@@ -125,8 +131,61 @@ public class App {
 
     }
 
+    public String deszifratu(String kriptograma, String kodea){
+        //Kriptograma eta kodea emanda, mezu argia lortzen du
+        //Aurre: Kriptogramak eta kodeak ezin dute karaktere berezirik izan
+        //Post: Kriptogramari dagokion mezua lortu da
+
+        String mezua = "";
+
+        //Lehenengo patroia lortu behar da
+        if(kodea.equals(" ")){
+            System.out.println("Barkatu baina gako gabe ezin da mezua lortu :((");
+        }
+        else{
+            System.out.println("Mezua deszifratzen...");
+            char patroia[] = this.patroiaGakoarekinSortu(kodea);
+
+            //Behin patroia izanda mezua lortu behar da
+            kriptograma=this.hutsuneakKendu(kriptograma);
+            kriptograma=this.letraLarrizJarri(kriptograma);
+
+            for(int i = 0 ; i < kriptograma.length(); i++){
+                int pos = this.posizioaLortu(kriptograma.charAt(i),patroia);
+                char letra = (char)(65+pos);
+                mezua = mezua+letra;
+            }
+        }
+
+        System.out.println("Mezu argia:\n"+mezua+"\n");
+        return mezua;
+    }
+
+
+    private int posizioaLortu(char letra, char[] patroia){
+        //Letra bat emanda gakoan duen posizioa kalkulatzen du
+        //Aurre: Letra larria izan behar da eta beti egongo da patroian
+        //Post: Letrari patroian dagokion posizioa itzuliko du
+
+        int pos = 0;
+        boolean aurkitua = false;
+
+        while(!aurkitua){
+            if(patroia[pos]==letra){
+                aurkitua = true;
+            }
+            else{
+                pos++;
+            }
+        }
+
+        return pos;
+    }
 
     public static void main(String[] args) {
-        new App().zifratu("OnDo funtzioNATzen DuT");
+
+        //System.out.println("Zein da zifratu nahi duzun mezua?\nEzin dira karaktere berezirik egon :)\n");
+        String kodea = new App().zifratu(args[0], args[1]);
+        new App().deszifratu(kodea,args[1]);
     }
 }
