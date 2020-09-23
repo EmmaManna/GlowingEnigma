@@ -4,11 +4,48 @@
 package ehu.isad;
 
 public class App {
-    public String getGreeting() {
-        return "Kaixo mundua.";
+
+    public char[] patroiaSortu(){
+        //Ausaz letrak esleituko ditu ordezkatze patroia sortzeko
+        //Post: Ausaz ordezkatze patroia sortu du Array bat itzuliz
+
+        char patroiaArray[] = new char[26];
+        for (int i = 65; i < 91; i++){
+            boolean ondo = false;
+
+            while (!ondo){
+                int zenb = (int)(Math.floor(Math.random()*(26)));
+                char letra = (char)(i); //ASCII kodean letraren balioa 65=A ...
+
+                //Konprobatu posizio hori beteta ez dagoela
+                if(!this.posizioaKonprobatu(patroiaArray,zenb)){ //Ez dago
+                    patroiaArray[zenb]=letra;
+                    ondo=true;
+                } //Bestela beste bat sortu
+            }
+        }
+
+        for(int j = 0; j < 26; j++){ //Patroia inprimatu
+            System.out.print(patroiaArray[j]);
+        }
+
+        return patroiaArray;
     }
 
+
+    private boolean posizioaKonprobatu(char[] patroia, int pos){
+        //Karaktere array eta posizio bat emanda posizio hori hustik dagoen konprobatzen du
+        //Post: False hutsik badago eta True letra dagoenean
+
+        boolean dago = false;
+        if(patroia[pos]!='\u0000') { //Balio nulua ez bada
+            dago = true;
+        }
+        return dago;
+    }
+
+
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        char patroiaArray[] = new App().patroiaSortu();
     }
 }
