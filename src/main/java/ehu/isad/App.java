@@ -5,7 +5,7 @@ package ehu.isad;
 
 public class App {
 
-    private char[] patroiaSortu(){
+    private char[] patroiaAusazSortu(){
         //Ausaz letrak esleituko ditu ordezkatze patroia sortzeko
         //Post: Ausaz ordezkatze patroia sortu du Array bat itzuliz
 
@@ -25,12 +25,6 @@ public class App {
             }
         }
 
-        System.out.println("Patroia:\nABCDEFGHIJKLMNOPQRSTUVWXYZ");
-        for(int j = 0; j < 26; j++){ //Patroia inprimatu
-            System.out.print(patroiaArray[j]);
-        }
-        System.out.println(" \n");
-
         return patroiaArray;
     }
 
@@ -46,6 +40,42 @@ public class App {
         return dago;
     }
 
+    private char[] patroiaGakoarekinSortu(String gakoa){
+        //Gako bat emanda patroia sortuko du
+        //Post: Gakoa erabiliz, hutsuneak eta errepikatutako letrak kenduz, patroiaren Array-a itzultzen du
+
+        char patroia[] = new char[26];
+        String gakoaPrest = this.hutsuneakKendu(gakoa);
+        gakoaPrest = this.letraLarrizJarri(gakoaPrest);
+        gakoaPrest = this.errepikatuakKendu(gakoaPrest);
+
+        if(gakoaPrest.length() < 26){
+            gakoaPrest = gakoaPrest + "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            gakoaPrest = this.errepikatuakKendu(gakoaPrest);
+        }
+
+        for(int i = 0; i < 26; i ++){
+            patroia[i]=gakoaPrest.charAt(i);
+        }
+
+        return patroia;
+    }
+
+
+    private String errepikatuakKendu(String gakoa){
+        //String bat emanda, errepikatutako letrak kentzen ditu, lehenengo agerpena soilik utziz
+        //Post: Errepikatutako karaktereak ezabatu dira
+
+        String errepikatuGabe = "";
+        while (gakoa.length() > 0){
+            char letra = gakoa.charAt(0);
+            gakoa = gakoa.replace(String.valueOf(letra),"");
+            errepikatuGabe = errepikatuGabe+letra;
+        }
+        //System.out.println(errepikatuGabe);
+        return errepikatuGabe;
+    }
+
 
     public String zifratu(String mezua){
         //Mezu bat emanda, ordezkatze algoritmoa erabiliz kriptograma sortuko du
@@ -54,7 +84,13 @@ public class App {
         //Post: Mezua enkriptatuta itzultzen du
 
         System.out.println("Emandako mezua:\n" + mezua + "\n");
-        char patroia[] = this.patroiaSortu();
+        char patroia[] = this.patroiaGakoarekinSortu("patata");
+
+        System.out.println("Patroia:\nABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        for(int j = 0; j < 26; j++){ //Patroia inprimatu
+            System.out.print(patroia[j]);
+        }
+        System.out.println(" \n");
 
         String mezuaPrest = "";
         mezuaPrest = this.hutsuneakKendu(mezua);
