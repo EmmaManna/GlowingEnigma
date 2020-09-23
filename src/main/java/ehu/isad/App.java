@@ -155,9 +155,9 @@ public class App {
                 char letra = (char)(65+pos);
                 mezua = mezua+letra;
             }
+            System.out.println("Mezu argia:\n"+mezua+"\n");
         }
 
-        System.out.println("Mezu argia:\n"+mezua+"\n");
         return mezua;
     }
 
