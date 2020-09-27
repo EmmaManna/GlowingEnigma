@@ -185,7 +185,10 @@ public class OrdezkatzeHiztegia {
     public static void main(String[] args) {
 
         //System.out.println("Zein da zifratu nahi duzun mezua?\nEzin dira karaktere berezirik egon :)\n");
-        String kodea = new OrdezkatzeHiztegia().zifratu(args[0], args[1]);
-        new OrdezkatzeHiztegia().deszifratu(kodea,args[1]);
+        //String kodea = new OrdezkatzeHiztegia().zifratu(args[0], args[1]);
+        //new OrdezkatzeHiztegia().deszifratu(kodea,args[1]);
+
+        String kriptograma = new CesarZifraketa().zifratu("FUntzIOnaten DU",3 );
+        new CesarZifraketa().deszifratu(kriptograma,3);
     }
 }
